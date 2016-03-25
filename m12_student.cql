@@ -1,3 +1,9 @@
+#Note:  This CQL will not function on its own.  Parts of it have been left incomplete, requiring you to further define them.
+
+CREATE KEYSPACE serenity_books WITH replication = {'class': 'NetworkTopologyStrategy', <YOUR DATACENTER NAME GOES HERE>: <RF>}  AND durable_writes = true;
+
+use serenity_books;
+
 CREATE TABLE books_by_isbn (
     isbn TEXT,
     title TEXT,
