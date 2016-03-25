@@ -45,7 +45,8 @@ public class ExperfyModule12Project {
         String[] nodeList = {"192.168.0.100"};
         String username = "serenity";
         String password = "bacon";
-        CassandraDAO cassDao = CassandraDAO.getInstance(nodeList, username, password);
+        String dataCenter = "AaronsLab";
+        CassandraDAO cassDao = CassandraDAO.getInstance(nodeList, username, password, dataCenter);
 
         //prepare specific DAOs
         BookDAO bookDao = new BookDAO(cassDao.getSession());
@@ -98,7 +99,7 @@ public class ExperfyModule12Project {
             
             List<Book> books = bookDao.getBooksByCategory(category);
             for (Book book : books) {
-                System.out.format("%20s %40s %13s %20s %s \n",
+                System.out.format("%20s %40s %13s %25s %s \n",
                     book.getAuthor(), 
                     book.getTitle(),
                     book.getIsbn(),
