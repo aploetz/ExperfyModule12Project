@@ -70,10 +70,10 @@ public class ExperfyModule12Project {
         //Create a new customer object, and update your address
         Customer myAddressUpdate = new Customer();
         myAddressUpdate.setEmail(myEmailAddress);
-        myAddressUpdate.setStreet("9347 Magnolia Lane N.");
-        myAddressUpdate.setCity("Maple Grove");
-        myAddressUpdate.setState("MN");
-        myAddressUpdate.setPostal("55369");
+        myAddressUpdate.setStreet("800 West Main St.");
+        myAddressUpdate.setCity("Whitewater");
+        myAddressUpdate.setState("WI");
+        myAddressUpdate.setPostal("53190");
         myAddressUpdate.setCountry("United States");
         custDao.updateExistingAddress(myAddressUpdate);
         
