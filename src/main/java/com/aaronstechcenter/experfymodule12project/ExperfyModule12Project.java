@@ -45,7 +45,8 @@ public class ExperfyModule12Project {
         String[] nodeList = {"192.168.0.100"};
         String username = "serenity";
         String password = "bacon";
-        CassandraDAO cassDao = CassandraDAO.getInstance(nodeList, username, password);
+        String dataCenter = "AaronsLab";
+        CassandraDAO cassDao = CassandraDAO.getInstance(nodeList, username, password, dataCenter);
 
         //prepare specific DAOs
         BookDAO bookDao = new BookDAO(cassDao.getSession());
@@ -69,10 +70,10 @@ public class ExperfyModule12Project {
         //Create a new customer object, and update your address
         Customer myAddressUpdate = new Customer();
         myAddressUpdate.setEmail(myEmailAddress);
-        myAddressUpdate.setStreet("9347 Magnolia Lane N.");
-        myAddressUpdate.setCity("Maple Grove");
-        myAddressUpdate.setState("MN");
-        myAddressUpdate.setPostal("55369");
+        myAddressUpdate.setStreet("800 West Main St.");
+        myAddressUpdate.setCity("Whitewater");
+        myAddressUpdate.setState("WI");
+        myAddressUpdate.setPostal("53190");
         myAddressUpdate.setCountry("United States");
         custDao.updateExistingAddress(myAddressUpdate);
         
@@ -98,7 +99,7 @@ public class ExperfyModule12Project {
             
             List<Book> books = bookDao.getBooksByCategory(category);
             for (Book book : books) {
-                System.out.format("%20s %40s %13s %20s %s \n",
+                System.out.format("%20s %40s %13s %25s %s \n",
                     book.getAuthor(), 
                     book.getTitle(),
                     book.getIsbn(),

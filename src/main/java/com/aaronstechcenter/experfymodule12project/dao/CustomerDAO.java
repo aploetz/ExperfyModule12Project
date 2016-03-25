@@ -43,7 +43,7 @@ public class CustomerDAO {
     public void createNewCustomer(Customer _customer) {
         try {
                 String strCQL = "INSERT INTO serenity_books.customer_by_email "
-                    + "(email,firstName,lastName,password,street,city,state,postal,country) "
+                    + "(email,firstName,lastName,password,postal,street,city,state,country) "
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
 
                 PreparedStatement statement = session.prepare(strCQL);
@@ -99,9 +99,8 @@ public class CustomerDAO {
         try {
         PreparedStatement statement = session.prepare(strCQL);
         BoundStatement boundStatement = new BoundStatement(statement);
-        boundStatement.bind(_customer.getEmail(),_customer.getPostal(),
-                _customer.getStreet(), _customer.getCity(), _customer.getState(),
-                _customer.getCountry());
+        boundStatement.bind(_customer.getEmail(), _customer.getStreet(), _customer.getCity(),
+                _customer.getState(), _customer.getPostal(), _customer.getCountry());
 
         session.execute(boundStatement);
         } catch (Exception ex) {

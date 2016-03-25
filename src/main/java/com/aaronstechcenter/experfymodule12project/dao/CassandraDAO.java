@@ -31,11 +31,12 @@ import com.datastax.driver.core.policies.TokenAwarePolicy;
 import com.datastax.driver.core.policies.DCAwareRoundRobinPolicy;
 
 public class CassandraDAO {
-    private static Cluster cluster;
-    private static Session session;
-    private static String password;
-    private static String username;
-    private static String[] nodeList;
+   private static Cluster cluster;
+   private static Session session;
+   private static String password;
+   private static String username;
+   private static String[] nodeList;
+   private static String dataCenter;
 
    private static CassandraDAO instance = null;
 
@@ -43,13 +44,16 @@ public class CassandraDAO {
       // Exists only to defeat instantiation.
    }
 
-   public static CassandraDAO getInstance(String[] _nodes, String _username, String _password) {
-        if(instance == null) {
+   public static CassandraDAO getInstance(String[] _nodes, String _username, String _password, 
+           String _dataCenter) {
+       
+       if(instance == null) {
            instance = new CassandraDAO();
             instance.nodeList = _nodes;
             instance.username = _username;
             instance.password = _password;
-
+            instance.dataCenter = _dataCenter;
+            
             setCluster();
         }
         
@@ -79,7 +83,7 @@ public class CassandraDAO {
             .setConsistencyLevel(ConsistencyLevel.LOCAL_ONE);
 
         DCAwareRoundRobinPolicy dcPol = new DCAwareRoundRobinPolicy.Builder()
-            .withLocalDc("AaronsLab")
+            .withLocalDc(dataCenter)
             .build();
         
         cluster = Cluster.builder()
@@ -119,5 +123,13 @@ public class CassandraDAO {
     
     public void setNodeList(String[] _nodeList) {
         nodeList = _nodeList;
+    }
+    
+    public String getDataCenter() {
+        return dataCenter;
+    }
+    
+    public void setDataCenter(String _dataCenter) {
+        dataCenter = _dataCenter;
     }
 }
