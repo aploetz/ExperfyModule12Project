@@ -42,15 +42,11 @@ public class CustomerDAO {
     
     public void createNewCustomer(Customer _customer) {
         try {
-                String strCQL = "INSERT INTO serenity_books.customer_by_email "
-                    + "(email,firstName,lastName,password,postal,street,city,state,country) "
-                    + "VALUES (?,?,?,?,?,?,?,?,?)";
+                String strCQL = ;
 
                 PreparedStatement statement = session.prepare(strCQL);
                 BoundStatement boundStatement = new BoundStatement(statement);
-                boundStatement.bind(_customer.getEmail(),_customer.getFirstName(),_customer.getLastName(),
-                        _customer.getPassword(),_customer.getPostal(), _customer.getStreet(),
-                        _customer.getCity(), _customer.getState(), _customer.getCountry());
+                boundStatement.bind(;
                 
                 session.execute(boundStatement);
         } catch (Exception ex) {
@@ -61,9 +57,7 @@ public class CustomerDAO {
     public Customer getCustomer(String _email) {
         Customer returnVal = new Customer();
 
-        String strCQL = "SELECT email,firstname,lastname,password,street,city,state,postal,country "
-            + "FROM serenity_books.customer_by_email "
-            + "WHERE email=?";
+        String strCQL = ;
         
         try {
             PreparedStatement statement = session.prepare(strCQL);
@@ -72,42 +66,28 @@ public class CustomerDAO {
 
             ResultSet results = session.execute(boundStatement);
             for (Row row : results) {
-                returnVal.setEmail(_email); 
-                returnVal.setFirstName(row.getString("firstname"));
-                returnVal.setLastName(row.getString("lastname"));
-                returnVal.setPassword(row.getString("password"));
-                returnVal.setStreet(row.getString("street"));
-                returnVal.setCity(row.getString("city"));
-                returnVal.setState(row.getString("state"));
-                returnVal.setPostal(row.getString("postal"));
-                returnVal.setCountry(row.getString("country"));
+
             }
         } catch (Exception ex) {
-            System.out.println("No books found for this ISBN");
+            System.out.println("Customer not found for this email!");
         }
 
         return returnVal;
     }
     
-    public boolean updateExistingAddress(Customer _customer) {
-        String strCQL = "INSERT INTO serenity_books.customer_by_email "
-            + "(email,street,city,state,postal,country) "
-            + "VALUES (?,?,?,?,?,?)";
-
-        boolean returnVal = true;
+    public void updateExistingAddress(Customer _customer) {
+        String strCQL = ;
         
         try {
         PreparedStatement statement = session.prepare(strCQL);
         BoundStatement boundStatement = new BoundStatement(statement);
-        boundStatement.bind(_customer.getEmail(), _customer.getStreet(), _customer.getCity(),
-                _customer.getState(), _customer.getPostal(), _customer.getCountry());
+        boundStatement.bind(;
 
         session.execute(boundStatement);
         } catch (Exception ex) {
             System.out.println(ex.toString());
             returnVal = false;
         }
-        return returnVal;
     }
     
     public void closeConnection() {

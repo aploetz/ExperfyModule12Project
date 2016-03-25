@@ -44,17 +44,15 @@ public class OrderDAO {
     }
     
     public void createOrder(List<OrderItem> _order) {
-        String strCQL = "INSERT INTO serenity_books.order_items "
-            + "(orderid,email,orderdate,status,isbn,title,price,qty) "
-            + "VALUES (?,?,?,?,?,?,?,?)";
+        //Tip: DO NOT USE A BATCH STATEMENT HERE!!!!
+        String strCQL = ;
 
         PreparedStatement statement = session.prepare(strCQL);
         BoundStatement boundStatement = new BoundStatement(statement);
 
         try {
             for (OrderItem item : _order) {
-                boundStatement.bind(item.getOrderID(),item.getEmail(),item.getOrderDate(),
-                    item.getStatus(),item.getIsbn(),item.getTitle(),item.getPrice(),item.getQty());
+                boundStatement.bind(;
 
                 session.execute(boundStatement);
             }
@@ -67,24 +65,15 @@ public class OrderDAO {
         List<OrderItem> returnVal = new ArrayList<OrderItem>();
 
         try {
-            Date queryDate = new Date();
-            String selectItemsCQL = "SELECT orderID, orderDate, status, price, qty "
-                + "FROM serenity_books.order_items "
-                + "WHERE email=? ";
-            PreparedStatement ps = session.prepare(selectItemsCQL);
-            BoundStatement boundStatement = new BoundStatement(ps);
-            boundStatement.bind(_email);
 
-            session.execute(boundStatement);
+
             
             ResultSet results = session.execute(boundStatement);
             for (Row row : results) {
                 OrderItem item = new OrderItem();
                 item.setOrderID(row.getUUID("orderid"));
-                item.setOrderDate(row.getTimestamp("orderdate"));
-                item.setStatus(row.getString("status"));
-                item.setPrice(row.getLong("price"));
-                item.setQty(row.getLong("qty"));
+
+
                 
                 returnVal.add(item);
             }
@@ -95,6 +84,8 @@ public class OrderDAO {
         return returnVal;
     }
     
+    //Note: If the PRIMARY KEY on serenity_books.order_items was built correctly,
+    //      then NO MODIFICATIONS SHOULD BE REQUIRED FOR THIS METHOD.
     public void updateOrderStatus(String _newStatus, List<OrderItem> _order) {
         String strCQL = "INSERT INTO serenity_books.order_items "
             + "(orderid,email,isbn,status,orderDate) "

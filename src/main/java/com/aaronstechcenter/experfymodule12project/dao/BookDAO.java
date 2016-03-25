@@ -43,9 +43,7 @@ public class BookDAO {
     
     public Book getBookByISBN(String _isbn) {
         Book returnVal = new Book();
-        String strCQL = "SELECT author,title,publisher,edition,year,category,price "
-            + "FROM serenity_books.books_by_isbn "
-            + "WHERE isbn=?";
+        String strCQL = ;
         
         try {
             PreparedStatement statement = session.prepare(strCQL);
@@ -55,13 +53,7 @@ public class BookDAO {
             ResultSet results = session.execute(boundStatement);
             for (Row row : results) {
                 returnVal.setAuthor(row.getString("author")); 
-                returnVal.setTitle(row.getString("title"));
-                returnVal.setIsbn(_isbn);
-                returnVal.setPublisher(row.getString("publisher"));
-                returnVal.setYear(row.getString("year"));
-                returnVal.setEdition(row.getString("edition"));
-                returnVal.setCategory(row.getString("category"));
-                returnVal.setPrice(row.getLong("price"));
+                
             }
         } catch (Exception ex) {
             System.out.println(ex.toString());
@@ -74,9 +66,7 @@ public class BookDAO {
     public List<Book> getBooksByCategory(String _category) {
         List<Book> returnVal = new ArrayList<Book>();
 
-        String strCQL = "SELECT author,title,publisher,edition,year,category,price,isbn "
-            + "FROM serenity_books.books_by_category "
-            + "WHERE category=?";
+        String strCQL = ;
         
         try {
             PreparedStatement statement = session.prepare(strCQL);
@@ -87,14 +77,6 @@ public class BookDAO {
             for (Row row : results) {
                 Book book = new Book();
                 
-                book.setAuthor(row.getString("author")); 
-                book.setTitle(row.getString("title"));
-                book.setIsbn(row.getString("isbn"));
-                book.setPublisher(row.getString("publisher"));
-                book.setYear(row.getString("year"));
-                book.setEdition(row.getString("edition"));
-                book.setCategory(row.getString("category"));
-                book.setPrice(row.getLong("price"));
                 
                 returnVal.add(book);
             }
@@ -109,8 +91,7 @@ public class BookDAO {
     public List<String> getBookCategories() {
         List<String> returnVal = new ArrayList<String>();
 
-        String strCQL = "SELECT DISTINCT category "
-            + "FROM serenity_books.books_by_category ";
+        String strCQL = ;
         
         try {
             ResultSet results = session.execute(strCQL);
@@ -123,28 +104,6 @@ public class BookDAO {
         }
         
         return returnVal;
-    }
-    
-    public long getPrice(String _isbn) {
-        long price = -1;
-        
-        String strCQL = "SELECT price "
-            + "FROM serenity_books.books_by_isbn "
-            + "WHERE isbn=?";
-        
-        try {
-            PreparedStatement statement = session.prepare(strCQL);
-            BoundStatement boundStatement = new BoundStatement(statement);
-            boundStatement.bind(_isbn);
-
-            ResultSet results = session.execute(boundStatement);
-            price = results.one().getLong("price");
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-            System.out.println("No books found for this ISBN");
-        }
-        
-        return price;
     }
     
     public void closeConnection() {

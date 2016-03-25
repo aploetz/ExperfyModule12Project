@@ -45,26 +45,9 @@ public class CartDAO {
         List<CartBook> returnVal = new ArrayList<CartBook>();
         
         try {
-            String strCQL = "SELECT email,isbn,title,price,qty "
-                + "FROM serenity_books.cart_books WHERE email = ?";
+            String strCQL = ;
             
-            PreparedStatement statement = session.prepare(strCQL);
-            BoundStatement boundStatement = new BoundStatement(statement);
-            boundStatement.bind(_email);
-
-            ResultSet results = session.execute(boundStatement);
-            for (Row row : results) {
-                CartBook book = new CartBook();
-                
-                book.setEmail(row.getString("email")); 
-                book.setTitle(row.getString("title"));
-                book.setIsbn(row.getString("isbn"));
-                book.setQty(row.getLong("qty"));
-                book.setPrice(row.getLong("price"));
-                
-                returnVal.add(book);
-            }
-            
+ 
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
@@ -78,14 +61,10 @@ public class CartDAO {
     
     public void AddItem(String _isbn, long _qty, long _price, String _title, String _email) {
         try {
-            String insertItemCQL = "INSERT INTO serenity_books.cart_books "
-                + "(email,isbn,title,price,qty) "
-                + "VALUES(?,?,?,?,?)";
-            PreparedStatement ps = session.prepare(insertItemCQL);
-            BoundStatement boundStatement = new BoundStatement(ps);
-            boundStatement.bind(_email,_isbn,_title,_price,_qty);
-
-            session.execute(boundStatement);
+            String insertItemCQL = ;
+                    
+                    
+                   
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
@@ -110,28 +89,7 @@ public class CartDAO {
         
         return success;
     }
-    
-    
-    public boolean removeAllItems(String _email) {
-        boolean success = true;
-        
-        try {
-                String removeItemCQL = "DELETE FROM serenity_books.cart_books ";
-                removeItemCQL += "WHERE email=? AND isbn=?";
-
-                PreparedStatement ps = session.prepare(removeItemCQL);
-                BoundStatement boundStatement = new BoundStatement(ps);
-                boundStatement.bind(_email);
-
-                session.execute(boundStatement);
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-            success = false;
-        }
-        
-        return success;
-    }
-    
+       
     public void closeConnection() {
         session.close();
     }

@@ -42,10 +42,10 @@ public class ExperfyModule12Project {
     
     public static void main(String[] args) {
         //prepare connection
-        String[] nodeList = {"192.168.0.100"};
-        String username = "serenity";
-        String password = "bacon";
-        String dataCenter = "AaronsLab";
+        String[] nodeList = {"127.0.0.1"};
+        String username = ;
+        String password = ;
+        String dataCenter = ;
         CassandraDAO cassDao = CassandraDAO.getInstance(nodeList, username, password, dataCenter);
 
         //prepare specific DAOs
@@ -57,24 +57,24 @@ public class ExperfyModule12Project {
         //**************QUERIES TO SOLVE FOR**************//
         
         //Life will be easier if you set your email address here:
-        String myEmailAddress = "aaronploetz@gmail.com";
+        String myEmailAddress = ;
 
         //insert yourself as a customer
 //        public Customer(String _firstName, String _lastName, String _email, String _password,
 //                        String _street,    String _city,     String _state, String _postal, String _country)
         Customer customer = 
-            new Customer("Aaron","Ploetz",myEmailAddress,"flynnLives", 
-                         "33 S. 6th Street","Minneapolis","MN","55402","United States");
+            new Customer( , ,myEmailAddress, , 
+                          , , , , );
         custDao.createNewCustomer(customer);
 
         //Create a new customer object, and update your address
         Customer myAddressUpdate = new Customer();
         myAddressUpdate.setEmail(myEmailAddress);
-        myAddressUpdate.setStreet("800 West Main St.");
-        myAddressUpdate.setCity("Whitewater");
-        myAddressUpdate.setState("WI");
-        myAddressUpdate.setPostal("53190");
-        myAddressUpdate.setCountry("United States");
+        myAddressUpdate.setStreet( );
+        myAddressUpdate.setCity( );
+        myAddressUpdate.setState( );
+        myAddressUpdate.setPostal( );
+        myAddressUpdate.setCountry( );
         custDao.updateExistingAddress(myAddressUpdate);
         
         //retreive your customer data by email, and save to a new Customer object
@@ -88,7 +88,7 @@ public class ExperfyModule12Project {
                 customerTest.getState(),
                 customerTest.getCountry());
         
-        //get the list book categories
+        //get the list of book categories
         List<String> categories = bookDao.getBookCategories();
         
         System.out.println();
@@ -112,8 +112,8 @@ public class ExperfyModule12Project {
         
         //pick 3 books...
         Book book1 = bookDao.getBookByISBN("9781783989126");
-        Book book2 = bookDao.getBookByISBN("9781430229704");
-        Book book3 = bookDao.getBookByISBN("9781418836290");
+        Book book2 = bookDao.getBookByISBN( );
+        Book book3 = bookDao.getBookByISBN( );
         
         //...convert them to CartBook objects...
         CartBook cartLine1 = new CartBook(myEmailAddress, book1, 1);
@@ -154,6 +154,7 @@ public class ExperfyModule12Project {
         List<OrderItem> orders = orderDao.getAllOrdersByEmail(myEmailAddress);
         viewMyOrders(orders);
         
+        //DONE!  Close cluster and all open sessions.
         custDao.closeConnection();
         bookDao.closeConnection();
         cartDao.closeConnection();
