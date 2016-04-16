@@ -57,7 +57,7 @@ CREATE TABLE order_items (
 CREATE TABLE cart_books (
     email TEXT,
     isbn TEXT,
-    titie TEXT,
+    title TEXT,
     price BIGINT,
     QTY BIGINT,
     PRIMARY KEY (email, isbn));
